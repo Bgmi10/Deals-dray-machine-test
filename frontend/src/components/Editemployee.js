@@ -68,15 +68,23 @@ const Editemployee = ({ showeditpanel, data, fetch_data }) => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
+    
     if (type === 'checkbox') {
       const newCourse = checked ? [...formData.course, value] : formData.course.filter(c => c !== value);
       setFormData({ ...formData, course: newCourse });
     } else if (type === 'file') {
-      setFormData({ ...formData, image: e.target.files[0] });
+      const file = e.target.files[0];
+  
+      if (file) {
+        // Generate the Blob URL
+        const blobUrl = URL.createObjectURL(file);
+        setFormData({ ...formData, image: blobUrl }); // Set Blob URL as string
+      }
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
+  
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-40 backdrop-blur-lg">

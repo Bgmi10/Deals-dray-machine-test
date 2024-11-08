@@ -122,7 +122,7 @@ export const EmployeeList = () => {
             {filteredEmployees.map((employee, index) => (
               <tr key={employee._id} className="border border-slate-700">
                 <td className="px-4 py-2">{index + 1}</td>
-                <td className="px-4 py-2"><div className="w-8 h-8 bg-gray-400 rounded-full"></div></td>
+                <td className="px-4 py-2"><img src={employee.image} className='rounded-full h-10 w-10' alt='user img' /></td>
                 <td className="px-4 py-2">{employee.name}</td>
                 <td className="px-4 py-2">{employee.email}</td>
                 <td className="px-4 py-2">{employee.mobile}</td>

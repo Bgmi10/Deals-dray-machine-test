@@ -37,10 +37,12 @@ router.get('/list',authenticateToken, async (req, res) => {
 });
 
 router.put('/edit/:id', authenticateToken, async (req, res) => {
+    console.log('put request')
     const { id } = req.params;
     const { name, email, mobile, designation, gender, course, image } = req.body;
-
+    console.log(email, name )
     if (!name || !email || !mobile || !designation || !gender || !course) {
+        console.log(req.body)
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -49,12 +51,12 @@ router.put('/edit/:id', authenticateToken, async (req, res) => {
         if (checkemail) {
             return res.status(400).json({ message: 'Employee already exists with this email' });
         }
-
+        console.log('sav employee')
         const employee = await Employee.findById(id);
         if (!employee) {
             return res.status(404).json({ message: 'Employee not found' });
         }
-
+        console.log('saving emyee')
         employee.name = name;
         employee.email = email;
         employee.mobile = mobile;
@@ -62,10 +64,11 @@ router.put('/edit/:id', authenticateToken, async (req, res) => {
         employee.gender = gender;
         employee.course = course;
         employee.image = image;
-
+console.log('saving employee')
         await employee.save();
         return res.status(200).json({ message: 'Employee updated successfully', employee });
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ message: 'Error updating employee', error: error.message });
     }
 });
